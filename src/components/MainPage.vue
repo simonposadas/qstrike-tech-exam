@@ -9,7 +9,7 @@
         class="border rounded px-4 py-2 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
-        @click="addTodo"
+        @click="handleAddTodo"
         class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add
@@ -50,7 +50,7 @@
                 <input
                   type="checkbox"
                   :checked="todo.completed"
-                  @change="toggleTodo(todo.id)"
+                  @change="completeTodo(todo.id)"
                   class="h-5 w-5 text-blue-600 border-2 flex-shrink-0"
                 />
 
@@ -208,11 +208,13 @@ const onDragEnd = () => {
 };
 
 // Add a new to-do
-const addTodo = () => {
+const handleAddTodo = () => {
   if (newTodoText.value.trim()) {
     todoStore.addTodo(newTodoText.value);
     newTodoText.value = ""; // Clear the input
   }
+
+  isInprogressAccordionOpen.value = true;
 };
 
 // Open the modal for editing
@@ -237,8 +239,15 @@ const closeModal = () => {
 };
 
 // Toggle completion status
+const completeTodo = (id) => {
+  todoStore.toggleTodo(id);
+  isCompletedAccordionOpen.value = true;
+};
+
+// Uncheck completed task to In Progress
 const toggleTodo = (id) => {
   todoStore.toggleTodo(id);
+  isInprogressAccordionOpen.value = true;
 };
 
 const deleteTodo = (id) => {
