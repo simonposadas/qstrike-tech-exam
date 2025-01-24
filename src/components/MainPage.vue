@@ -56,7 +56,7 @@
 
                 <span
                   :class="{ 'line-through text-gray-500': todo.completed }"
-                  class="text-lg flex-grow break-words whitespace-pre-line"
+                  class="text-lg flex-grow text-left break-words whitespace-pre-line ml-2"
                 >
                   {{ todo.text }}
                 </span>
@@ -104,10 +104,10 @@
                 type="checkbox"
                 checked
                 @change="toggleTodo(todo.id)"
-                class="form-checkbox h-5 w-5 text-blue-600"
+                class="h-5 w-5 text-blue-600 border-2 flex-shrink-0"
               />
               <span
-                class="text-lg line-through text-gray-500 flex-grow break-words whitespace-pre-line"
+                class="text-lg text-left line-through text-gray-500 flex-grow break-words whitespace-pre-line ml-2"
               >
                 {{ todo.text }}</span
               >
