@@ -16,8 +16,8 @@
       </button>
     </div>
 
-    <!-- Accordion for Inprogress Tasks -->
-    <div class="">
+    <!-- In Progress Tasks Accordion -->
+    <div class="w-full">
       <button
         @click="toggleInProgressAccordion"
         class="w-full text-left bg-yellow-200 px-4 py-2 rounded mt-4 flex justify-between items-center"
@@ -25,7 +25,7 @@
         In Progress Tasks ({{ activeTodos.length }})
         <span class="ml-2">{{ isInprogressAccordionOpen ? "▲" : "▼" }}</span>
       </button>
-      <div v-show="isInprogressAccordionOpen" class="space-y-4 mt-2">
+      <div v-show="isInprogressAccordionOpen" class="space-y-4 mt-2 lg:px-6">
         <draggable
           :list="activeTodos"
           :group="{ name: 'todos', pull: 'clone', put: true }"
@@ -37,15 +37,13 @@
           <template #item="{ element: todo }">
             <li
               :key="todo.id"
-              class="flex items-center w-[40%] p-4 border rounded shadow-sm bg-white mx-2"
-              :class="{ 'bg-gray-100': todo.completed }"
+              class="flex items-center p-4 border rounded shadow-sm bg-white"
             >
               <img
                 alt="drag logo"
                 src="../assets/drag.png"
                 class="drag-icon h-5 w-5 object-contain mr-4 cursor-move"
               />
-
               <div class="flex items-center gap-2 flex-grow">
                 <input
                   type="checkbox"
@@ -53,18 +51,14 @@
                   @change="completeTodo(todo.id)"
                   class="h-5 w-5 text-blue-600 border-2 flex-shrink-0"
                 />
-
                 <span
-                  :class="{ 'line-through text-gray-500': todo.completed }"
-                  class="text-lg flex-grow text-left break-words whitespace-pre-line ml-2"
+                  class="text-lg flex-grow text-left break-words whitespace-pre-line ml-2 mr-4"
                 >
                   {{ todo.text }}
                 </span>
               </div>
-
               <div class="flex gap-2 ml-auto">
                 <button
-                  v-if="!todo.completed"
                   @click="openEditModal(todo)"
                   class="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500"
                 >
@@ -83,8 +77,8 @@
       </div>
     </div>
 
-    <!-- Accordion for Completed Tasks -->
-    <div>
+    <!-- Completed Tasks Accordion -->
+    <div class="w-full">
       <button
         @click="toggleCompleteAccordion"
         class="w-full text-left bg-green-400 px-4 py-2 rounded mt-4 flex justify-between items-center"
@@ -92,14 +86,14 @@
         Completed Tasks ({{ completedTodos.length }})
         <span class="ml-2">{{ isCompletedAccordionOpen ? "▲" : "▼" }}</span>
       </button>
-      <div v-show="isCompletedAccordionOpen" class="space-y-4 mt-2">
-        <div
-          v-for="todo in completedTodos"
-          :key="todo.id"
-          class="p-4 border rounded shadow-sm bg-gray-100 w-lg"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+      <div v-show="isCompletedAccordionOpen" class="space-y-4 mt-2 lg:px-6">
+        <div class="space-y-4 flex flex-col justify-center w-full">
+          <li
+            v-for="todo in completedTodos"
+            :key="todo.id"
+            class="flex items-center p-4 border rounded shadow-sm bg-gray-100"
+          >
+            <div class="flex items-center gap-2 flex-grow">
               <input
                 type="checkbox"
                 checked
@@ -107,10 +101,10 @@
                 class="h-5 w-5 text-blue-600 border-2 flex-shrink-0"
               />
               <span
-                class="text-lg text-left line-through text-gray-500 flex-grow break-words whitespace-pre-line ml-2"
+                class="text-lg text-left line-through text-gray-500 flex-grow break-words whitespace-pre-line ml-2 mr-4"
               >
-                {{ todo.text }}</span
-              >
+                {{ todo.text }}
+              </span>
             </div>
             <div class="flex gap-2">
               <button
@@ -120,7 +114,7 @@
                 Delete
               </button>
             </div>
-          </div>
+          </li>
         </div>
       </div>
     </div>
@@ -193,7 +187,7 @@ const editingTodoId = ref(null);
 const isCompletedAccordionOpen = ref(false);
 const isInprogressAccordionOpen = ref(true);
 
-// Computed properties for sorted todos
+// Computed properties for sorted to-dos
 const completedTodos = computed(() => {
   return todoStore.todos.filter((todo) => todo.completed);
 });
